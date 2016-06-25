@@ -63,17 +63,35 @@ public class MyBetterMap<K, V> implements Map<K, V> {
 		return maps.get(index);
 	}	
 
+	private boolean equals(Object target, Object obj) {
+                if (target == null) {
+                        return obj == null;
+                }
+                return target.equals(obj);
+        }
+
 	@Override
 	public boolean containsKey(Object target) {
-		// to find a key, we only have to search one map
-        // TODO: fill this in.
+		MyLinearMap<K, V> map = chooseMap(target);
+		for(K item: map.keySet()){
+			Object item_obj = (Object) item;
+				if(equals(item_obj, target)){
+					return true;
+				}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean containsValue(Object target) {
-		// to find a value, we have to search all maps
-        // TODO: fill this in.
+		for(MyLinearMap<K, V> aMap : maps){
+			for(V item :  aMap.values()){
+				Object val= (Object) item;
+				if(equals(val, target)){
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
